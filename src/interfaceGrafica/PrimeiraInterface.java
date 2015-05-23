@@ -15,18 +15,13 @@ import org.eclipse.swt.widgets.Text;
 public class PrimeiraInterface {
 
 	protected Shell shell;
-	private static final String[] FILTER_NAMES = {
-			"OpenOffice.org Spreadsheet Files (*.sxc)",
-			"Microsoft Excel Spreadsheet Files (*.xls)",
+	private static final String[] FILTRO_NOMES = { "Arquivo de texto (*.txt)",
+			"Microsoft Excel Planilha (*.xls)",
 			"Comma Separated Values Files (*.csv)", "All Files (*.*)" };
-	private static final String[] FILTER_EXTS = { "*.sxc", "*.xls", "*.csv",
-			"*.*" };
+	private static final String[] FILTRO_EXTENSOES = { "*.txt", "*.xls",
+			"*.csv", "*.*" };
+	private Text text;
 
-	/**
-	 * Launch the application.
-	 * 
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		try {
 			PrimeiraInterface window = new PrimeiraInterface();
@@ -57,23 +52,26 @@ public class PrimeiraInterface {
 	protected void createContents() {
 		shell = new Shell();
 		shell.setSize(533, 356);
-		shell.setText("SWT Application");
+		shell.setText("Grafos 2015.2");
 		final Text fileName = new Text(shell, SWT.BORDER);
 
 		Label lblSelecioneOArquivo = new Label(shell, SWT.NONE);
-		lblSelecioneOArquivo.setBounds(10, 37, 259, 15);
+		lblSelecioneOArquivo.setBounds(10, 6, 259, 15);
 		lblSelecioneOArquivo.setText("Selecione o Arquivo:");
 
 		Button btnNewButton = new Button(shell, SWT.PUSH);
-		btnNewButton.setBounds(10, 75, 75, 25);
-		btnNewButton.setText("New Button");
+		btnNewButton.setBounds(406, 25, 75, 25);
+		btnNewButton.setText("Selecionar");
+
+		text = new Text(shell, SWT.BORDER);
+		text.setBounds(10, 27, 371, 21);
 		btnNewButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				FileDialog dialog = new FileDialog(shell, SWT.OPEN);
-				dialog.setFilterNames(FILTER_NAMES);
-				dialog.setFilterExtensions(FILTER_EXTS);
+				dialog.setFilterNames(FILTRO_NOMES);
+				dialog.setFilterExtensions(FILTRO_EXTENSOES);
 				String fn = dialog.open();
 				if (fn != null) {
 					StringBuffer buf = new StringBuffer();
