@@ -11,7 +11,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.SelectionAdapter;
 
 public class InterfaceEscolhaArquivo {
 
