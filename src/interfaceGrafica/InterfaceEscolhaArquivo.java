@@ -57,8 +57,14 @@ public class InterfaceEscolhaArquivo {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button button = ((Button) e.widget);
-				System.out.println(button.getText());
-				System.out.println("Selecionado = " + button.getSelection());
+				
+				
+				if (button.getSelection()) {
+					System.out.println(button.getText());
+					System.out.println("Selecionado = " + button.getSelection());
+				}
+				
+				System.out.println();
 
 			}
 
@@ -77,6 +83,8 @@ public class InterfaceEscolhaArquivo {
 
 		diretorioTexto = new Text(janelaEntradaGrafo, SWT.BORDER);
 		diretorioTexto.setBounds(10, 27, 517, 21);
+		diretorioTexto.setEnabled(false);
+		
 
 		Button btnIniciar = new Button(janelaEntradaGrafo, SWT.NONE);
 		btnIniciar.setBounds(263, 121, 75, 25);
@@ -138,7 +146,7 @@ public class InterfaceEscolhaArquivo {
 		btnIniciar.addSelectionListener(new SelectionListener() {
 
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void widgetSelected(SelectionEvent e) {
 
 			}
 
