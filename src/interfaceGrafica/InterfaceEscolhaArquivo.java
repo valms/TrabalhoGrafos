@@ -1,6 +1,9 @@
 package interfaceGrafica;
 
+import io.ManipularTxt;
+
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -51,19 +54,19 @@ public class InterfaceEscolhaArquivo {
 		janelaEntradaGrafo.setSize(634, 195);
 		janelaEntradaGrafo.setText("Grafos 2015.2");
 		final Text fileName = new Text(janelaEntradaGrafo, SWT.BORDER);
-		
+
 		SelectionListener listener = new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button button = ((Button) e.widget);
-				
-				
+
 				if (button.getSelection()) {
 					System.out.println(button.getText());
-					System.out.println("Selecionado = " + button.getSelection());
+					System.out
+							.println("Selecionado = " + button.getSelection());
 				}
-				
+
 				System.out.println();
 
 			}
@@ -84,7 +87,6 @@ public class InterfaceEscolhaArquivo {
 		diretorioTexto = new Text(janelaEntradaGrafo, SWT.BORDER);
 		diretorioTexto.setBounds(10, 27, 517, 21);
 		diretorioTexto.setEnabled(false);
-		
 
 		Button btnIniciar = new Button(janelaEntradaGrafo, SWT.NONE);
 		btnIniciar.setBounds(263, 121, 75, 25);
@@ -101,12 +103,11 @@ public class InterfaceEscolhaArquivo {
 		radios[1].setBounds(194, 81, 207, 16);
 		radios[1].setText("\u00C1rvore de Cobertura M\u00EDnima (MST)");
 		radios[1].addSelectionListener(listener);
-		
+
 		radios[2] = new Button(janelaEntradaGrafo, SWT.RADIO);
 		radios[2].setBounds(415, 81, 193, 16);
 		radios[2].setText("Ordena\u00E7\u00E3o Topol\u00F3gica (DiGrafo)");
 		radios[2].addSelectionListener(listener);
-		
 
 		btnAbrirTxt.addSelectionListener(new SelectionListener() {
 
@@ -147,6 +148,15 @@ public class InterfaceEscolhaArquivo {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				ManipularTxt manipularTxt = new ManipularTxt();
+				File file = new File(diretorioTexto.getText());
+
+				try {
+					manipularTxt.ler(file);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 

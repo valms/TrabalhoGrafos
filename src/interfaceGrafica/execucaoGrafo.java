@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Shell;
 public class execucaoGrafo extends Dialog {
 
 	protected Object result;
-	protected Shell shell;
+	protected Shell shlTeoriaDosGrafos;
 
 	/**
 	 * Create the dialog.
@@ -25,10 +25,10 @@ public class execucaoGrafo extends Dialog {
 	 */
 	public Object open() {
 		createContents();
-		shell.open();
-		shell.layout();
+		shlTeoriaDosGrafos.open();
+		shlTeoriaDosGrafos.layout();
 		Display display = getParent().getDisplay();
-		while (!shell.isDisposed()) {
+		while (!shlTeoriaDosGrafos.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -40,9 +40,9 @@ public class execucaoGrafo extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shell = new Shell(getParent(), getStyle());
-		shell.setSize(450, 300);
-		shell.setText(getText());
+		shlTeoriaDosGrafos = new Shell(getParent(), getStyle());
+		shlTeoriaDosGrafos.setSize(450, 300);
+		shlTeoriaDosGrafos.setText("Teoria dos Grafos 2015.1");
 
 	}
 
