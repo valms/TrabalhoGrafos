@@ -53,11 +53,10 @@ public class InterfaceEscolhaArquivo {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		janelaEntradaGrafo = new Shell();
+		janelaEntradaGrafo = new Shell(SWT.TITLE | SWT.MIN);
 		janelaEntradaGrafo.setSize(634, 304);
 		janelaEntradaGrafo.setText("Grafos 2015.2");
 		final Text FILENAME = new Text(janelaEntradaGrafo, SWT.BORDER);
-		
 
 		SelectionListener listener = new SelectionListener() {
 
@@ -94,7 +93,7 @@ public class InterfaceEscolhaArquivo {
 		diretorioTexto.setEnabled(false);
 
 		Button btnIniciar = new Button(janelaEntradaGrafo, SWT.NONE);
-		btnIniciar.setBounds(267, 230, 75, 25);
+		btnIniciar.setBounds(256, 240, 75, 25);
 		btnIniciar.setText("Iniciar");
 
 		Button radios[] = new Button[3];
@@ -155,7 +154,7 @@ public class InterfaceEscolhaArquivo {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (diretorioTexto.getText().isEmpty()) {
-					//System.out.println("Entrou");
+					// System.out.println("Entrou");
 					MessageBox alertMessageBox = new MessageBox(
 							janelaEntradaGrafo, SWT.ICON_ERROR | SWT.OK);
 					alertMessageBox.setText("ERRO!");
@@ -177,12 +176,41 @@ public class InterfaceEscolhaArquivo {
 					File file = new File(diretorioTexto.getText());
 
 					try {
-						manipularTxt.matrizAdjacencia(file);
-						ExecucaoGrafo execucaoGrafo = new ExecucaoGrafo(
-								janelaEntradaGrafo, 0);
-						execucaoGrafo.open();
+						ExecucaoGrafo execucaoGrafo;
+
+						switch (radioButtonSelecionado) {
+						case "Busca em Profundidade (DFS)":
+							manipularTxt.matrizAdjacencia(file);
+							execucaoGrafo = new ExecucaoGrafo(
+									janelaEntradaGrafo, 0);
+							execucaoGrafo.open();
+							break;
+
+						case "Árvore de Cobertura Mínima (MST)":
+							manipularTxt.matrizAdjacencia(file);
+							execucaoGrafo = new ExecucaoGrafo(
+									janelaEntradaGrafo, 0);
+							execucaoGrafo.open();
+
+							break;
+
+						case "Ordenação Topológica (DiGrafo)":
+							manipularTxt.matrizAdjacencia(file);
+							execucaoGrafo = new ExecucaoGrafo(
+									janelaEntradaGrafo, 0);
+							execucaoGrafo.open();
+							break;
+						}
+
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					} catch (NumberFormatException e2) {
+						MessageBox alertMessageBox = new MessageBox(
+								janelaEntradaGrafo, SWT.ICON_ERROR | SWT.OK);
+						alertMessageBox.setText("ERRO!");
+						alertMessageBox
+								.setMessage("Entrada de Dados Inválidos. Favor, verifique se o arquivo esta correto.");
+						alertMessageBox.open();
 					}
 
 				}

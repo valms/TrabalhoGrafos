@@ -10,7 +10,7 @@ public class ManipularTxt {
 	public ManipularTxt() {
 	}
 
-	public int[][] matrizAdjacencia(File caminhoArquivo) throws IOException {
+	public int[][] matrizAdjacencia(File caminhoArquivo) throws IOException, NumberFormatException {
 		int x = 0, y = 0;
 
 		FileReader fr = new FileReader(caminhoArquivo);
