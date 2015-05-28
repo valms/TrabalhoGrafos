@@ -10,7 +10,7 @@ public class ManipularTxt {
 	public ManipularTxt() {
 	}
 
-	public void ler(File caminhoArquivo) throws IOException {
+	public int[][] matrizAdjacencia(File caminhoArquivo) throws IOException {
 		int x = 0, y = 0;
 
 		FileReader fr = new FileReader(caminhoArquivo);
@@ -24,7 +24,6 @@ public class ManipularTxt {
 			String[] values = line.split(" ");
 			for (String string : values) {
 				if (string.equalsIgnoreCase("inf")) {
-					// Para caso Grafo ponderado.
 					matriz[x][y] = Integer.MAX_VALUE;
 					y = y + 1;
 				} else {
@@ -32,8 +31,6 @@ public class ManipularTxt {
 					matriz[x][y] = stringInt;
 					y = y + 1;
 				}
-
-				// matrizAdjacencia[x][y] = stringInt;
 			}
 			x = x + 1;
 			y = 0;
@@ -42,12 +39,17 @@ public class ManipularTxt {
 		br.close();
 		fr.close();
 
+		System.out.println("Matriz");
+
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz.length; j++) {
 				System.out.print(" " + matriz[i][j]);
+
 			}
 			System.out.println();
 		}
+
+		return matriz;
 
 	}
 

@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -21,6 +22,8 @@ public class InterfaceEscolhaArquivo {
 	private static final String[] FILTRO_NOMES = { "Arquivo de texto (*.txt)" };
 	private static final String[] FILTRO_EXTENSOES = { "*.txt" };
 	private Text diretorioTexto;
+	private boolean radioSelecionado = false;
+	private String radioButtonSelecionado;
 
 	public static void main(String[] args) {
 		try {
@@ -51,9 +54,10 @@ public class InterfaceEscolhaArquivo {
 	 */
 	protected void createContents() {
 		janelaEntradaGrafo = new Shell();
-		janelaEntradaGrafo.setSize(634, 195);
+		janelaEntradaGrafo.setSize(634, 304);
 		janelaEntradaGrafo.setText("Grafos 2015.2");
-		final Text fileName = new Text(janelaEntradaGrafo, SWT.BORDER);
+		final Text FILENAME = new Text(janelaEntradaGrafo, SWT.BORDER);
+		
 
 		SelectionListener listener = new SelectionListener() {
 
@@ -63,8 +67,9 @@ public class InterfaceEscolhaArquivo {
 
 				if (button.getSelection()) {
 					System.out.println(button.getText());
-					System.out
-							.println("Selecionado = " + button.getSelection());
+					radioButtonSelecionado = button.getText();
+					radioSelecionado = true;
+
 				}
 
 				System.out.println();
@@ -89,7 +94,7 @@ public class InterfaceEscolhaArquivo {
 		diretorioTexto.setEnabled(false);
 
 		Button btnIniciar = new Button(janelaEntradaGrafo, SWT.NONE);
-		btnIniciar.setBounds(263, 121, 75, 25);
+		btnIniciar.setBounds(267, 230, 75, 25);
 		btnIniciar.setText("Iniciar");
 
 		Button radios[] = new Button[3];
@@ -133,7 +138,7 @@ public class InterfaceEscolhaArquivo {
 						buf.append(files[i]);
 						buf.append(" ");
 					}
-					fileName.setText(buf.toString());
+					FILENAME.setText(buf.toString());
 
 				}
 			}
@@ -148,16 +153,39 @@ public class InterfaceEscolhaArquivo {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ManipularTxt manipularTxt = new ManipularTxt();
-				File file = new File(diretorioTexto.getText());
 
-				try {
-					manipularTxt.ler(file);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (diretorioTexto.getText().isEmpty()) {
+					//System.out.println("Entrou");
+					MessageBox alertMessageBox = new MessageBox(
+							janelaEntradaGrafo, SWT.ICON_ERROR | SWT.OK);
+					alertMessageBox.setText("ERRO!");
+					alertMessageBox
+							.setMessage("Nenhum arquivo foi apontado. Favor, selecione o arquivo .txt desejado.");
+					alertMessageBox.open();
+
+				} else if (!radioSelecionado) {
+					MessageBox alertMessageBox = new MessageBox(
+							janelaEntradaGrafo, SWT.ICON_ERROR | SWT.OK);
+					alertMessageBox.setText("ERRO!");
+					alertMessageBox
+							.setMessage("Nenhum algorimo foi selecionado. Favor, selecione o algoritmo desejado.");
+					alertMessageBox.open();
+
+				} else {
+
+					ManipularTxt manipularTxt = new ManipularTxt();
+					File file = new File(diretorioTexto.getText());
+
+					try {
+						manipularTxt.matrizAdjacencia(file);
+						ExecucaoGrafo execucaoGrafo = new ExecucaoGrafo(
+								janelaEntradaGrafo, 0);
+						execucaoGrafo.open();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
 				}
-
 			}
 
 			@Override

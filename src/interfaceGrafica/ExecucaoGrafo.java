@@ -3,8 +3,9 @@ package interfaceGrafica;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.SWT;
 
-public class execucaoGrafo extends Dialog {
+public class ExecucaoGrafo extends Dialog {
 
 	protected Object result;
 	protected Shell shlTeoriaDosGrafos;
@@ -14,7 +15,7 @@ public class execucaoGrafo extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public execucaoGrafo(Shell parent, int style) {
+	public ExecucaoGrafo(Shell parent, int style) {
 		super(parent, style);
 		setText("SWT Dialog");
 	}
@@ -40,8 +41,8 @@ public class execucaoGrafo extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlTeoriaDosGrafos = new Shell(getParent(), getStyle());
-		shlTeoriaDosGrafos.setSize(450, 300);
+		shlTeoriaDosGrafos = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
+		shlTeoriaDosGrafos.setSize(830, 586);
 		shlTeoriaDosGrafos.setText("Teoria dos Grafos 2015.1");
 
 	}
