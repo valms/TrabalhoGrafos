@@ -16,6 +16,7 @@ public class ManipularTxt {
 		FileReader fr = new FileReader(caminhoArquivo);
 		BufferedReader br = new BufferedReader(fr);
 		String line;
+		
 		int quantidadeVertices = Integer.parseInt(br.readLine());
 		// System.out.println(tamanhoMatriz);
 		int[][] matriz = new int[quantidadeVertices][quantidadeVertices];
@@ -39,7 +40,7 @@ public class ManipularTxt {
 		br.close();
 		fr.close();
 
-		System.out.println("Matriz");
+		/*System.out.println("Matriz");
 
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz.length; j++) {
@@ -47,7 +48,7 @@ public class ManipularTxt {
 
 			}
 			System.out.println();
-		}
+		}*/
 
 		return matriz;
 
