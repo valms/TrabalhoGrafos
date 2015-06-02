@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ManipularTxt {
+public class LerTxt {
 
-	public ManipularTxt() {
+	public LerTxt() {
 	}
 
 	public int[][] matrizAdjacencia(File caminhoArquivo) throws IOException, NumberFormatException {

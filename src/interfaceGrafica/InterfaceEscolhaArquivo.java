@@ -1,6 +1,6 @@
 package interfaceGrafica;
 
-import io.ManipularTxt;
+import io.LerTxt;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -15,6 +16,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import tadGrafo.Grafo;
 
 public class InterfaceEscolhaArquivo {
 
@@ -24,6 +27,7 @@ public class InterfaceEscolhaArquivo {
 	private Text diretorioTexto;
 	private boolean radioSelecionado = false;
 	private String radioButtonSelecionado;
+	private Grafo grafo;
 
 	public static void main(String[] args) {
 		try {
@@ -40,6 +44,8 @@ public class InterfaceEscolhaArquivo {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
+		Image image = new Image(display, "resources\\logoUnifor.gif");
+		janelaEntradaGrafo.setImage(image);
 		janelaEntradaGrafo.open();
 		janelaEntradaGrafo.layout();
 		while (!janelaEntradaGrafo.isDisposed()) {
@@ -56,6 +62,7 @@ public class InterfaceEscolhaArquivo {
 		janelaEntradaGrafo = new Shell(SWT.TITLE | SWT.MIN);
 		janelaEntradaGrafo.setSize(634, 304);
 		janelaEntradaGrafo.setText("Grafos 2015.2");
+
 		final Text FILENAME = new Text(janelaEntradaGrafo, SWT.BORDER);
 
 		SelectionListener listener = new SelectionListener() {
@@ -116,7 +123,7 @@ public class InterfaceEscolhaArquivo {
 		btnAbrirTxt.addSelectionListener(new SelectionListener() {
 
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(janelaEntradaGrafo, SWT.OPEN);
 
 				dialog.setFilterNames(FILTRO_NOMES);
@@ -143,7 +150,7 @@ public class InterfaceEscolhaArquivo {
 			}
 
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
+			public void widgetDefaultSelected(SelectionEvent e) {
 
 			}
 		});
@@ -172,7 +179,7 @@ public class InterfaceEscolhaArquivo {
 
 				} else {
 
-					ManipularTxt manipularTxt = new ManipularTxt();
+					LerTxt manipularTxt = new LerTxt();
 					File file = new File(diretorioTexto.getText());
 
 					try {
@@ -181,6 +188,7 @@ public class InterfaceEscolhaArquivo {
 						switch (radioButtonSelecionado) {
 						case "Busca em Profundidade (DFS)":
 							manipularTxt.matrizAdjacencia(file);
+
 							execucaoGrafo = new ExecucaoGrafo(
 									janelaEntradaGrafo, 0);
 							execucaoGrafo.open();
