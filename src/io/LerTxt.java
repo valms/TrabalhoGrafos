@@ -18,7 +18,6 @@ public class LerTxt {
 		String line;
 		
 		int quantidadeVertices = Integer.parseInt(br.readLine());
-		// System.out.println(tamanhoMatriz);
 		int[][] matriz = new int[quantidadeVertices][quantidadeVertices];
 
 		while ((line = br.readLine()) != null) {
