@@ -7,37 +7,43 @@ import tadGrafo.Grafo;
 
 public class DFS {
 
-	private Queue<Integer> fila = new LinkedList<Integer>();
 	private Grafo grafo;
+	private int[] parent;
+	private boolean[] visitado;
+	private Queue<Integer> filaResultado;
+	private int matrizAdjacencia[][];
+	private final int COR_BRANCA = 1;
+	private final int COR_CINZA = 2;
+	private final int COR_NIGGA = 3;
 
 	public DFS(Grafo grafo) {
 		this.grafo = grafo;
+		this.parent = new int[grafo.getQuantidadeDeVertices() + 1];
+		this.visitado = new boolean[grafo.getQuantidadeDeVertices() + 1];
+		this.filaResultado = new LinkedList<Integer>();
+		this.matrizAdjacencia = grafo.getMatrizAdjacencia();
+
 	}
 
-	public void busca(int origem) {
-		fila.clear();
-		boolean[] ordemVisita = new boolean[grafo.getQuantidadeDeVertices()];
+	public void busca(int origem, int fim) {
+		boolean caminhoEncontrado = false;
+		int destino = 0, elemento = 0;
 
-		// Adiciono o origem como inicial
-		fila.add(origem);
+		for (int i = 0; i < grafo.getQuantidadeDeVertices(); i++) {
+			this.parent[i] = -1;
+			this.visitado[i] = false;
+		}
 
-		while (!fila.isEmpty()) {
-			int temporario = fila.poll();
+		this.filaResultado.add(origem);
+		this.parent[origem] = -1;
+		visitado[origem] = true;
 
-			if (ordemVisita[temporario] = true) {
-				continue;
-			}
-
-			for (int i = 0; i < grafo.getMatrizAdjacencia().length; i++) {
-				if (condition) {
-					
-				}
-				
+		while (!this.filaResultado.isEmpty()) {
+			if (matrizAdjacencia[elemento][destino] > 0) {
 
 			}
 
 		}
 
 	}
-
 }

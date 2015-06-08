@@ -5,6 +5,12 @@ public class Aresta {
 	private int verticeDestino;
 	private int peso;
 
+	public Aresta(int verticeOrigem, int verticeDestino, int peso) {
+		this.peso = peso;
+		this.verticeOrigem = verticeOrigem;
+		this.verticeDestino = verticeDestino;
+	}
+
 	public int getVerticeOrigem() {
 		return verticeOrigem;
 	}

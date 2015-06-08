@@ -22,7 +22,7 @@ import tadGrafo.Grafo;
 public class ExecucaoGrafo {
 
 	protected Shell janelaExibicaoGrafo;
-	private Grafo grafo = new Grafo();
+	private Grafo grafo;
 	private LerTxt lerTxt = new LerTxt();
 	private static final String[] FILTRO_NOMES = { "Arquivo de texto (*.txt)" };
 	private static final String[] FILTRO_EXTENSOES = { "*.txt" };
@@ -168,8 +168,10 @@ public class ExecucaoGrafo {
 			}
 
 			File arquivoTxt = new File(caminhoDoArquivo);
-
+			grafo = new Grafo();
+			grafo.setQuantidadeDeVertices(lerTxt.matrizAdjacencia(arquivoTxt).length);
 			grafo.setMatrizAdjacencia(lerTxt.matrizAdjacencia(arquivoTxt));
+			grafo.setGrafoDirigido(lerTxt.isGrafoDirigido());
 
 			MessageBox messageBox = new MessageBox(janelaExibicaoGrafo,
 					SWT.ICON_INFORMATION | SWT.OK);
@@ -187,6 +189,12 @@ public class ExecucaoGrafo {
 		}
 	}
 
+	/**
+	 * Bugado
+	 * 
+	 * @todo
+	 * @param event
+	 */
 	public void imprimirMatrizAdjacencia(SelectionEvent event) {
 		int matrizResultate[][] = grafo.getMatrizAdjacencia();
 		String string;
@@ -208,6 +216,9 @@ public class ExecucaoGrafo {
 
 	public static void main(String[] args) {
 		try {
+			for (int i = 0; i < args.length; i++) {
+				System.out.println(args.length);
+			}
 			ExecucaoGrafo execucaoGrafo = new ExecucaoGrafo();
 			execucaoGrafo.open();
 
