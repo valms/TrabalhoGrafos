@@ -98,7 +98,6 @@ public class Grafo {
 			System.out.print((i + 1) + " ");
 		}
 		System.out.println();
-		// System.out.println(this.grafoDirigido);
 
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			System.out.print((i + 1) + "(" + i + ")| ");
@@ -112,6 +111,10 @@ public class Grafo {
 		for (int i = 0; i < verificaConjutoVizinhanca(0).length; i++) {
 			System.out.print(" " + aux[i]);
 		}
+		System.out.println();
+		
+		removeAresta((8 - 1), (4 - 1)); // Arrumar
+		
 
 	}
 
@@ -131,9 +134,13 @@ public class Grafo {
 		}
 	}
 
+	/**
+	 * 
+	 * @param vertice
+	 * @return um vetor com o conjuto vizinhança do vértice
+	 */
 	public int[] verificaConjutoVizinhanca(int vertice) {
 		int[] conjuntoVizinhanca = null;
-		int contador = 0;
 		if (!this.listaAdjacenciaVazia(vertice)) {
 			conjuntoVizinhanca = new int[this.quantidadeDeVertices];
 			int indice = 0;
@@ -141,14 +148,9 @@ public class Grafo {
 			while (auxiliar != null) {
 				conjuntoVizinhanca[indice++] = auxiliar.getVerticeDestino() + 1;
 				auxiliar = this.proximoAdjacente(vertice);
-				if (conjuntoVizinhanca[indice] != 0) {
-					contador++;
-				}
 			}
-
 		}
 		return conjuntoVizinhanca;
-
 	}
 
 	public boolean listaAdjacenciaVazia(int vertice) {
@@ -169,7 +171,7 @@ public class Grafo {
 
 	public Aresta proximoAdjacente(int vertice) {
 		this.posicaoAdjacente[vertice]++;
-		while ((this.posicaoAdjacente[vertice] < this.getQuantidadeDeVertices())
+		while ((this.posicaoAdjacente[vertice] < this.quantidadeDeVertices)
 				&& (!verificaAresta(vertice, this.posicaoAdjacente[vertice]))) {
 			this.posicaoAdjacente[vertice]++;
 		}
@@ -184,8 +186,23 @@ public class Grafo {
 
 	}
 
-	public int[][] removeAresta() {
-		return this.matrizAdjacencia;
+	/*
+	 * TODO
+	 */
+	public Aresta removeAresta(int verticeOrigem, int verticeDestino) {
+		if (verificaAresta(verticeOrigem, verticeDestino)) {
+			return null;
+		} else {
+			Aresta aresta = new Aresta(verticeDestino, verticeDestino,
+					this.matrizAdjacencia[verticeOrigem][verticeDestino]);
+			if (verticeOrigem == verticeDestino) {
+				this.matrizAdjacencia[verticeOrigem][verticeDestino] = 0;
+			} else {
+				this.matrizAdjacencia[verticeOrigem][verticeDestino] = 0;
+			}
+			return aresta;
+
+		}
 	}
 
 	public boolean estaVazio() {
