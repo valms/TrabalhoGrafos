@@ -2,13 +2,17 @@ package interfaceGrafica;
 
 import io.LerTxt;
 
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
@@ -18,6 +22,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import tadGrafo.Grafo;
+import algoritmos.DFS;
+
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
 
 public class ExecucaoGrafo {
 
@@ -28,6 +36,9 @@ public class ExecucaoGrafo {
 	private static final String[] FILTRO_EXTENSOES = { "*.txt" };
 	private String caminhoDoArquivo;
 	private Text FILENAME;
+	private mxGraph mxGraph;
+	private mxGraphComponent mxGraphComponent;
+	private int matriz[][];
 
 	/**
 	 * Método para abrir a Janela
@@ -56,9 +67,11 @@ public class ExecucaoGrafo {
 		janelaExibicaoGrafo = new Shell();
 		janelaExibicaoGrafo.setSize(893, 780);
 		janelaExibicaoGrafo.setText("Grafos 2015.2");
+		mxGraph = new mxGraph();
+		mxGraphComponent = new mxGraphComponent(mxGraph);
+		mxGraphComponent.setPreferredSize(new Dimension(400, 400));
 
 		FILENAME = new Text(janelaExibicaoGrafo, SWT.BORDER);
-
 		Menu menu = new Menu(janelaExibicaoGrafo, SWT.BAR);
 		janelaExibicaoGrafo.setMenuBar(menu);
 
@@ -140,9 +153,16 @@ public class ExecucaoGrafo {
 		MenuItem mntmSobre = new MenuItem(menu, SWT.NONE);
 		mntmSobre.setText("Sobre");
 
+		Composite composite = new Composite(janelaExibicaoGrafo, SWT.EMBEDDED
+				| SWT.NO_BACKGROUND);
+		composite.setBounds(10, 10, 857, 701);
+		Frame frame = SWT_AWT.new_Frame(composite);
+		frame.add(mxGraphComponent);
+
 	}
 
 	public void abrirJanelaSelecaoArquivo(SelectionEvent e) {
+
 		try {
 			FileDialog fileDialog = new FileDialog(janelaExibicaoGrafo,
 					SWT.OPEN);
@@ -168,9 +188,11 @@ public class ExecucaoGrafo {
 			}
 
 			File arquivoTxt = new File(caminhoDoArquivo);
+			matriz = lerTxt.matrizAdjacencia(arquivoTxt);
 			grafo = new Grafo();
-			grafo.setQuantidadeDeVertices(lerTxt.matrizAdjacencia(arquivoTxt).length);
-			grafo.setMatrizAdjacencia(lerTxt.matrizAdjacencia(arquivoTxt));
+
+			grafo.setQuantidadeDeVertices(matriz.length);
+			grafo.setMatrizAdjacencia(matriz);
 			grafo.setGrafoDirigido(lerTxt.isGrafoDirigido());
 
 			MessageBox messageBox = new MessageBox(janelaExibicaoGrafo,
@@ -182,6 +204,27 @@ public class ExecucaoGrafo {
 
 			grafo.imprimirGrafo();
 
+			mxGraph.getModel().beginUpdate();
+			Object parent = mxGraph.getDefaultParent();
+			int posicao = 50;
+
+			for (int i = 0; i < matriz.length; i++) {
+				mxGraph.insertVertex(parent, null, i + 1, 150 + posicao,
+						150 + posicao, 50, 50);
+				posicao += 50;
+			}
+
+			for (int i = 0; i < matriz.length; i++) {
+				for (int j = 0; j < matriz.length; j++) {
+
+				}
+			}
+			mxGraph.getModel().endUpdate();
+
+			DFS dfs = new DFS(grafo);
+
+			dfs.buscaDFS();
+
 		} catch (NumberFormatException numberFormatException) {
 			numberFormatException.printStackTrace();
 		} catch (IOException ioException) {
@@ -192,7 +235,7 @@ public class ExecucaoGrafo {
 	/**
 	 * Bugado
 	 * 
-	 * @todo
+	 * @todo usar uma tabela
 	 * @param event
 	 */
 	public void imprimirMatrizAdjacencia(SelectionEvent event) {
