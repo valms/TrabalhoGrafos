@@ -56,12 +56,9 @@ public class DFS {
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			if (cor[i] == COR_BRANCA) {
 				tempo = this.visitaDFS(i, tempo, cor);
-
+				System.out.println("Vertice " + (i + 1) + " -> "
+						+ tempoDescorberta[i] + "/" + tempoFinalizacao[i]);
 			}
-		}
-		
-		for (int i = 0; i < cor.length; i++) {
-			System.out.println(cor[i]);
 		}
 
 	}
@@ -71,6 +68,7 @@ public class DFS {
 		this.tempoDescorberta[vertice] = ++tempo;
 		if (!this.grafo.listaAdjacenciaVazia(vertice)) {
 			Aresta aresta = this.grafo.primeiroListaAdjacencia(vertice);
+
 			while (aresta != null) {
 				int ver = aresta.getVerticeDestino();
 				if (cor[ver] == COR_BRANCA) {
@@ -83,6 +81,7 @@ public class DFS {
 
 		cor[vertice] = COR_NIGGA;
 		this.tempoFinalizacao[vertice] = ++tempo;
+
 		return tempo;
 
 	}
