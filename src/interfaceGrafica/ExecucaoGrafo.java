@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -114,28 +115,28 @@ public class ExecucaoGrafo {
 				SWT.NONE);
 		mntmExibirMatrizAdjacencia.setText("Exibir Matriz Adjac\u00EAncia");
 		mntmExibirMatrizAdjacencia
-		.addSelectionListener(new SelectionListener() {
+				.addSelectionListener(new SelectionListener() {
 
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				imprimirMatrizAdjacencia(e);
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						imprimirMatrizAdjacencia(e);
 
-			}
+					}
 
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
+					@Override
+					public void widgetDefaultSelected(SelectionEvent arg0) {
 
-			}
-		});
-		
+					}
+				});
+
 		MenuItem mntmPlotarGrafo = new MenuItem(subMenuGrafo, SWT.NONE);
 		mntmPlotarGrafo.setText("Plotar Grafo");
 		mntmPlotarGrafo.addListener(SWT.Selection, new Listener() {
-			
+
 			@Override
 			public void handleEvent(Event e) {
 				plotarGrafo(e);
-				
+
 			}
 		});
 
@@ -167,6 +168,14 @@ public class ExecucaoGrafo {
 
 		MenuItem mntmOrdenaoTopolgica = new MenuItem(menuAlgoritmo, SWT.NONE);
 		mntmOrdenaoTopolgica.setText("Ordena\u00E7\u00E3o Topol\u00F3gica");
+		mntmOrdenaoTopolgica.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event e) {
+				ordenacaoTopologica(e);
+				
+			}
+		});
 
 		MenuItem mntmKruskal = new MenuItem(menuAlgoritmo, SWT.NONE);
 		mntmKruskal.setText("Kruskal");
@@ -281,17 +290,28 @@ public class ExecucaoGrafo {
 	}
 
 	private void plotarGrafo(Event e) {
+		grafo.imprimirGrafo();
 
 	}
 
 	private void executarDFS(Event e) {
 		DFS dfs = new DFS(grafo);
-		dfs.buscaDFS();
+		//dfs.buscaDFS();
+		dfs.classificarArestasArcos();
 
 	}
 
 	private void executarKruskal(Event e) {
 
+	}
+	
+	private void ordenacaoTopologica(Event e) {
+		DFS dfs = new DFS(grafo);
+
+		for (int i = 0; i < dfs.ordenacaoTopologica().size(); i++) {
+			System.out.println(dfs.ordenacaoTopologica().peek() + 1 + "-");
+
+		}
 	}
 
 	public static void main(String[] args) {

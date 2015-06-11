@@ -55,6 +55,14 @@ public class Grafo {
 	public int getQuantidadeDeVertices() {
 		return quantidadeDeVertices;
 	}
+	
+	public int getElemento(int i, int j){
+		return this.matrizAdjacencia[i][j];
+	}
+	
+	public void setElement(int i, int j, int valor){
+		this.matrizAdjacencia[i][j] = valor;
+	}
 
 	public void setQuantidadeDeVertices(int quantidadeDeVertices) {
 		this.quantidadeDeVertices = quantidadeDeVertices;
@@ -93,7 +101,7 @@ public class Grafo {
 	}
 
 	public void imprimirGrafo() {
-		System.out.print("   ");
+		System.out.print("      ");
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			System.out.print((i + 1) + " ");
 		}
@@ -107,13 +115,8 @@ public class Grafo {
 			System.out.println();
 		}
 
-		int aux[] = verificaConjutoVizinhanca((8 - 1));
-		for (int i = 0; i < verificaConjutoVizinhanca(0).length; i++) {
-			System.out.print(" " + aux[i]);
-		}
-		System.out.println();
 		
-		removeAresta((8 - 1), (4 - 1)); // Arrumar
+		System.out.println();
 		
 
 	}
