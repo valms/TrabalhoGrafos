@@ -14,7 +14,9 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -112,19 +114,30 @@ public class ExecucaoGrafo {
 				SWT.NONE);
 		mntmExibirMatrizAdjacencia.setText("Exibir Matriz Adjac\u00EAncia");
 		mntmExibirMatrizAdjacencia
-				.addSelectionListener(new SelectionListener() {
+		.addSelectionListener(new SelectionListener() {
 
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						imprimirMatrizAdjacencia(e);
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				imprimirMatrizAdjacencia(e);
 
-					}
+			}
 
-					@Override
-					public void widgetDefaultSelected(SelectionEvent arg0) {
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
 
-					}
-				});
+			}
+		});
+		
+		MenuItem mntmPlotarGrafo = new MenuItem(subMenuGrafo, SWT.NONE);
+		mntmPlotarGrafo.setText("Plotar Grafo");
+		mntmPlotarGrafo.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event e) {
+				plotarGrafo(e);
+				
+			}
+		});
 
 		new MenuItem(menuArquivo, SWT.SEPARATOR);
 
@@ -143,12 +156,28 @@ public class ExecucaoGrafo {
 
 		MenuItem mntmBfs = new MenuItem(menuAlgoritmo, SWT.NONE);
 		mntmBfs.setText("BFS");
+		mntmBfs.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event e) {
+				executarDFS(e);
+
+			}
+		});
 
 		MenuItem mntmOrdenaoTopolgica = new MenuItem(menuAlgoritmo, SWT.NONE);
 		mntmOrdenaoTopolgica.setText("Ordena\u00E7\u00E3o Topol\u00F3gica");
 
 		MenuItem mntmKruskal = new MenuItem(menuAlgoritmo, SWT.NONE);
 		mntmKruskal.setText("Kruskal");
+		mntmKruskal.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event e) {
+				executarKruskal(e);
+
+			}
+		});
 
 		MenuItem mntmSobre = new MenuItem(menu, SWT.NONE);
 		mntmSobre.setText("Sobre");
@@ -161,7 +190,7 @@ public class ExecucaoGrafo {
 
 	}
 
-	public void abrirJanelaSelecaoArquivo(SelectionEvent e) {
+	private void abrirJanelaSelecaoArquivo(SelectionEvent e) {
 
 		try {
 			FileDialog fileDialog = new FileDialog(janelaExibicaoGrafo,
@@ -202,8 +231,6 @@ public class ExecucaoGrafo {
 					+ " carregado com êxito");
 			messageBox.open();
 
-			grafo.imprimirGrafo();
-
 			mxGraph.getModel().beginUpdate();
 			Object parent = mxGraph.getDefaultParent();
 			int posicao = 50;
@@ -221,10 +248,6 @@ public class ExecucaoGrafo {
 			}
 			mxGraph.getModel().endUpdate();
 
-			DFS dfs = new DFS(grafo);
-
-			dfs.buscaDFS();
-
 		} catch (NumberFormatException numberFormatException) {
 			numberFormatException.printStackTrace();
 		} catch (IOException ioException) {
@@ -238,7 +261,7 @@ public class ExecucaoGrafo {
 	 * @todo usar uma tabela
 	 * @param event
 	 */
-	public void imprimirMatrizAdjacencia(SelectionEvent event) {
+	private void imprimirMatrizAdjacencia(SelectionEvent event) {
 		int matrizResultate[][] = grafo.getMatrizAdjacencia();
 		String string;
 
@@ -254,6 +277,20 @@ public class ExecucaoGrafo {
 		}
 
 		messageBox.open();
+
+	}
+
+	private void plotarGrafo(Event e) {
+
+	}
+
+	private void executarDFS(Event e) {
+		DFS dfs = new DFS(grafo);
+		dfs.buscaDFS();
+
+	}
+
+	private void executarKruskal(Event e) {
 
 	}
 

@@ -33,6 +33,7 @@ public class LerTxt {
 					matriz[x][y] = Integer.MAX_VALUE;
 					y = y + 1;
 				} else {
+					System.out.println(string);
 					int stringInt = Integer.parseInt(string);
 					matriz[x][y] = stringInt;
 					y = y + 1;

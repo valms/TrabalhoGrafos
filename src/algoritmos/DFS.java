@@ -58,6 +58,7 @@ public class DFS {
 				tempo = this.visitaDFS(i, tempo, cor);
 				
 			}
+			
 		}
 
 	}
@@ -80,8 +81,7 @@ public class DFS {
 
 		cor[vertice] = COR_NIGGA;
 		this.tempoFinalizacao[vertice] = ++tempo;
-		System.out.println("Vertice " + (vertice + 1) + " -> "
-				+ tempoDescorberta[vertice] + "/" + tempoFinalizacao[vertice]);
+		
 		return tempo;
 
 	}
