@@ -56,8 +56,7 @@ public class DFS {
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			if (cor[i] == COR_BRANCA) {
 				tempo = this.visitaDFS(i, tempo, cor);
-				System.out.println("Vertice " + (i + 1) + " -> "
-						+ tempoDescorberta[i] + "/" + tempoFinalizacao[i]);
+				
 			}
 		}
 
@@ -81,7 +80,8 @@ public class DFS {
 
 		cor[vertice] = COR_NIGGA;
 		this.tempoFinalizacao[vertice] = ++tempo;
-
+		System.out.println("Vertice " + (vertice + 1) + " -> "
+				+ tempoDescorberta[vertice] + "/" + tempoFinalizacao[vertice]);
 		return tempo;
 
 	}
