@@ -2,11 +2,11 @@ package interfaceGrafica;
 
 import io.LerTxt;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.Panel;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -42,6 +42,10 @@ public class ExecucaoGrafo {
 	private mxGraph mxGraph;
 	private mxGraphComponent mxGraphComponent;
 	private int matriz[][];
+	private Frame frame;
+	private Parser parser;
+	private Panel panel;
+	private Composite composite;
 
 	/**
 	 * Método para abrir a Janela
@@ -70,9 +74,6 @@ public class ExecucaoGrafo {
 		janelaExibicaoGrafo = new Shell();
 		janelaExibicaoGrafo.setSize(893, 780);
 		janelaExibicaoGrafo.setText("Grafos 2015.2");
-		mxGraph = new mxGraph();
-		mxGraphComponent = new mxGraphComponent(mxGraph);
-		mxGraphComponent.setPreferredSize(new Dimension(400, 400));
 
 		FILENAME = new Text(janelaExibicaoGrafo, SWT.BORDER);
 		Menu menu = new Menu(janelaExibicaoGrafo, SWT.BAR);
@@ -135,7 +136,7 @@ public class ExecucaoGrafo {
 
 			@Override
 			public void handleEvent(Event e) {
-				plotarGrafo(e);
+				plotarGrafo(e, grafo.getMatrizAdjacencia());
 
 			}
 		});
@@ -169,11 +170,11 @@ public class ExecucaoGrafo {
 		MenuItem mntmOrdenaoTopolgica = new MenuItem(menuAlgoritmo, SWT.NONE);
 		mntmOrdenaoTopolgica.setText("Ordena\u00E7\u00E3o Topol\u00F3gica");
 		mntmOrdenaoTopolgica.addListener(SWT.Selection, new Listener() {
-			
+
 			@Override
 			public void handleEvent(Event e) {
 				ordenacaoTopologica(e);
-				
+
 			}
 		});
 
@@ -191,12 +192,53 @@ public class ExecucaoGrafo {
 		MenuItem mntmSobre = new MenuItem(menu, SWT.NONE);
 		mntmSobre.setText("Sobre");
 
-		Composite composite = new Composite(janelaExibicaoGrafo, SWT.EMBEDDED
+		composite = new Composite(janelaExibicaoGrafo, SWT.EMBEDDED
 				| SWT.NO_BACKGROUND);
 		composite.setBounds(10, 10, 857, 701);
-		Frame frame = SWT_AWT.new_Frame(composite);
-		frame.add(mxGraphComponent);
+		frame = SWT_AWT.new_Frame(composite);
 
+	}
+
+	private void plotarGrafo(Event e, int[][] matriz) {
+		grafo.imprimirGrafo();
+		Grafo grafo = new Grafo();
+		grafo.setMatrizAdjacencia(matriz);
+		grafo.setGrafoDirigido(false);
+		
+		parser = new Parser();
+		try {
+			parser.grafoParaXML(grafo, "teste.xml");
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+
+		frame.remove(panel);
+
+		panel = new Panel(new BorderLayout());
+		panel.add(PlotGrafo.demo("teste.xml", "name"));
+
+		frame.add(panel);
+		frame.repaint();
+		frame.setVisible(true);
+		
+		
+		
+		
+		// frame.add(mxGraphComponent);
+
+		/*
+		 * mxGraph.getModel().beginUpdate(); Object parent =
+		 * mxGraph.getDefaultParent(); int posicao = 50;
+		 * 
+		 * for (int i = 0; i < matriz.length; i++) {
+		 * mxGraph.insertVertex(parent, null, i + 1, 150 + posicao, 150 +
+		 * posicao, 50, 50); posicao += 50; }
+		 * 
+		 * for (int i = 0; i < matriz.length; i++) { for (int j = 0; j <
+		 * matriz.length; j++) {
+		 * 
+		 * } } mxGraph.getModel().endUpdate();
+		 */
 	}
 
 	private void abrirJanelaSelecaoArquivo(SelectionEvent e) {
@@ -240,23 +282,6 @@ public class ExecucaoGrafo {
 					+ " carregado com êxito");
 			messageBox.open();
 
-			mxGraph.getModel().beginUpdate();
-			Object parent = mxGraph.getDefaultParent();
-			int posicao = 50;
-
-			for (int i = 0; i < matriz.length; i++) {
-				mxGraph.insertVertex(parent, null, i + 1, 150 + posicao,
-						150 + posicao, 50, 50);
-				posicao += 50;
-			}
-
-			for (int i = 0; i < matriz.length; i++) {
-				for (int j = 0; j < matriz.length; j++) {
-
-				}
-			}
-			mxGraph.getModel().endUpdate();
-
 		} catch (NumberFormatException numberFormatException) {
 			numberFormatException.printStackTrace();
 		} catch (IOException ioException) {
@@ -289,14 +314,9 @@ public class ExecucaoGrafo {
 
 	}
 
-	private void plotarGrafo(Event e) {
-		grafo.imprimirGrafo();
-
-	}
-
 	private void executarDFS(Event e) {
 		DFS dfs = new DFS(grafo);
-		//dfs.buscaDFS();
+		// dfs.buscaDFS();
 		dfs.classificarArestasArcos();
 
 	}
@@ -304,7 +324,7 @@ public class ExecucaoGrafo {
 	private void executarKruskal(Event e) {
 
 	}
-	
+
 	private void ordenacaoTopologica(Event e) {
 		DFS dfs = new DFS(grafo);
 

@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="libs/jgrapht-ext-0.9.1-uber.jar"/>
 	<classpathentry kind="lib" path="libs/jgrapht-ext-0.9.1.jar"/>
 	<classpathentry kind="lib" path="libs/jgraphx-2.0.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/prefuse.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

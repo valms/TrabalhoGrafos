@@ -128,8 +128,8 @@ public class DFS {
 				if (dfs.getComponentes().size() > quantidadeComponentesConexos) {
 					for (int j = 0; j < quantidadeVertices; j++) {
 						if (grafoAuxiliar.getElemento(i, j) > 0) {
-							grafoAuxiliar.setElement(i, j, 2);
-							grafoAuxiliar.setElement(j, i, 2);
+							grafoAuxiliar.setElement(i, j, 99);
+							grafoAuxiliar.setElement(j, i, 99);
 						}
 					}
 				}

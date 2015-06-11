@@ -27,8 +27,8 @@ public class LerTxt {
 			String[] values = line.split(" ");
 			for (String string : values) {
 				if (string.equalsIgnoreCase("inf")) {
-					grafoDirigido = true;
-					matriz[x][y] = Integer.MAX_VALUE;
+					grafoDirigido = false;
+					matriz[x][y] = 0;
 					y = y + 1;
 				} else {
 					int stringInt = Integer.parseInt(string);
